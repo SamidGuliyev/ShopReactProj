@@ -1,0 +1,18 @@
+{
+    "users": [
+        {
+            "id": "019c7edc-3dea-74d7-a42f-8382e77fc774",
+            "first_name": "Samid",
+            "last_name": "Quliyev",
+            "email": "samid.guliyev@gmail.com",
+            "password": "samid123!"
+        },
+        {
+            "id": "019c7edc-3dea-74d7-a42f-8382e77fc774",
+            "first_name": "Siruz",
+            "last_name": "Mammadli",
+            "email": "siruz.mammadli@gmail.com",
+            "password": "siruz123!"
+        }
+    ]
+}

@@ -39,7 +39,7 @@
 }
 
 /* Cart Button Styles */
-.cart-btn-wrapper {
+.cart-btn-wrapper, .auth-btn {
     position: relative;
     text-decoration: none;
     color: #e0e0e0;
@@ -51,12 +51,15 @@
     transition: all 0.2s ease;
     background-color: #2d2d2d;
     border: 1px solid #404040;
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
-.cart-btn-wrapper:hover {
+.cart-btn-wrapper:hover, .auth-btn:hover {
     background-color: #383838;
     transform: translateY(-1px);
     border-color: #64b5f6;
+    color: #64b5f6;
 }
 
 .cart-icon {
@@ -82,3 +85,78 @@
     justify-content: center;
     margin-left: 0.25rem;
 }
+
+/* Avatar Dropdown Styles */
+.avatar-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.avatar-btn {
+    background: none;
+    border: 2px solid #404040;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+}
+
+.avatar-btn:hover {
+    border-color: #64b5f6;
+    transform: translateY(-1px);
+}
+
+.avatar-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background-color: #2d2d2d;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    min-width: 160px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.avatar-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #383838;
+    color: #ef5350;
+}
+

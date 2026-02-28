@@ -2,10 +2,16 @@ import { Link } from "react-router";
 import { useCart } from "../providers/carts/cart-providers";
 import "./cart.css";
 import "./cart-empty.css";
+import { useCookies } from "react-cookie";
+import Modal from "../components/layout/Modal";
+import { useState } from "react";
 
 export default function CartPage() {
-    const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
-    if (cart.length === 0) {
+  const [cookies] = useCookies(["token"]);
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  if (cart.length === 0) {
     return (
       <div className="cart-container">
         <h1 className="cart-title">Your Shopping Cart</h1>
@@ -19,11 +25,38 @@ export default function CartPage() {
       </div>
     );
   }
-    return (
-        
-        <div className="cart-container">
+
+  const handleCheckOutOnClick = () => {
+    if (!cookies.token) {
+      setOpen(true);
+    }
+  };
+
+  return (
+    <div className="cart-container">
+      <Modal isOpen={isOpen} onClose={() => setOpen(false)} title="Authentication Required">
+        <div className="auth-modal-content">
+          <p className="auth-modal-text">
+            Please log in to your account to complete your purchase and view your order history.
+          </p>
+          <div className="auth-modal-actions">
+            <button 
+              onClick={() => setOpen(false)} 
+              className="auth-btn-secondary"
+            >
+              Cancel
+            </button>
+            <Link to="/login" className="auth-btn-primary">
+              Log In
+            </Link>
+          </div>
+        </div>
+      </Modal>
+
       <h1 className="cart-title">Your Shopping Cart</h1>
-      <button className="clear-cart-btn" onClick={() => clearCart()}>Clear Cart</button>
+      <button className="clear-cart-btn" onClick={() => clearCart()}>
+        Clear Cart
+      </button>
 
       <div className="cart-content">
         <div className="cart-items">
@@ -58,13 +91,17 @@ export default function CartPage() {
                     className="qty-btn"
                     aria-label="Increase quantity"
                     onClick={() => updateQuantity(item.id, 1)}
-                    
                   >
                     +
                   </button>
                 </div>
 
-                <button onClick={() => removeFromCart(item.id)} className="remove-btn" >Remove</button>
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className="remove-btn"
+                >
+                  Remove
+                </button>
               </div>
             </div>
           ))}
@@ -90,12 +127,19 @@ export default function CartPage() {
 
           <div className="summary-row total">
             <span>Order Total</span>
-            <span>${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</span>
+            <span>
+              $
+              {cart
+                .reduce((total, item) => total + item.price * item.quantity, 0)
+                .toFixed(2)}
+            </span>
           </div>
 
-          <button className="checkout-btn">Proceed to Checkout</button>
+          <button onClick={handleCheckOutOnClick} className="checkout-btn">
+            Proceed to Checkout
+          </button>
         </div>
       </div>
     </div>
-    );
+  );
 }
