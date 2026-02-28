@@ -24,22 +24,22 @@ export default function ProductDetail() {
         </div>
 
         <div className="product-info-section">
-          <span className="product-category">{product.category}</span>
-          <h1 className="product-title">{product.title}</h1>
+          <span className="detail-category">{product.category}</span>
+          <h1 className="detail-title">{product.title}</h1>
           
-          <div className="product-rating">
+          <div className="detail-rating">
             <span>⭐ {product.rating.rate}</span>
-            <span className="rating-count">({product.rating.count} reviews)</span>
+            <span className="detail-rating-count">({product.rating.count} reviews)</span>
           </div>
 
-          <div className="product-price">${product.price.toFixed(2)}</div>
+          <div className="detail-price">${product.price.toFixed(2)}</div>
           
-          <p className="product-description">
+          <p className="detail-description">
             {product.description}
           </p>
 
-          <div className="product-actions">
-            <button className="add-to-cart-btn">
+          <div className="detail-actions">
+            <button className="detail-add-btn">
               🛒 Add to Cart
             </button>
           </div>

@@ -3,6 +3,7 @@ import HomePage from "../../pages/Home";
 import CartPage from "../../pages/Cart";
 import LoginPage from "../../pages/Login";
 import RegisterPage from "../../pages/Register";
+import ProductDetail from "../../pages/ProductDetail";
 
 
 export default function MainRouter() {
@@ -12,6 +13,7 @@ export default function MainRouter() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
         </Routes>
     );
 }
