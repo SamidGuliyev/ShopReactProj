@@ -25,7 +25,6 @@ const handleSubmit = (e: React.FormEvent) => {
 
   return (
     <div className="add-product">
-      <h2>Add Product</h2>
       <form className="product-form" onSubmit={handleSubmit}>
         <div className="form-grid">
           <label>

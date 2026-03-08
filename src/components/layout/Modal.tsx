@@ -6,9 +6,10 @@ interface ModalProps {
     onClose: () => void;
     children: ReactNode;
     title?: string;
+    className?: string;
 }
 
-export default function Modal({ isOpen, onClose, children, title }: ModalProps) {
+export default function Modal({ isOpen, onClose, children, title, className = '' }: ModalProps) {
     // Pressing 'Escape' closes the modal
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,7 +34,7 @@ export default function Modal({ isOpen, onClose, children, title }: ModalProps) 
 
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className={`modal-content ${className}`} onClick={(e) => e.stopPropagation()}>
                 <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
                     &times;
                 </button>

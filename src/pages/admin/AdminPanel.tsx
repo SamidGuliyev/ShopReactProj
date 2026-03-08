@@ -1,27 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { /*useEffect, useRef,*/ useState } from 'react'
 import './admin.css'
 import AddProductForm from './AddProductForm'
+import ProductTable from './ProductTable'
+import Modal from '../../components/layout/Modal'
 
 const AdminPanel: React.FC = () => {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    try {
-      const v = localStorage.getItem('admin-theme')
-      return (v === 'dark' ? 'dark' : 'light')
-    } catch (e) {
-      return 'light'
-    }
-  })
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('admin-theme', theme)
-    } catch (e) {
-      /* ignore */
-    }
-  }, [theme])
+  // const adminRootRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   console.log(adminRootRef.current ? adminRootRef.current.getBoundingClientRect() : null);
+  // }, []);
 
   return (
-    <div className={`admin-root ${theme === 'dark' ? 'dark' : 'light'}`}>
+    <div className="admin-root" /*ref={adminRootRef}*/>
       <aside className="admin-sidebar">
         <div className="brand">Admin Panel</div>
         <nav>
@@ -39,21 +32,27 @@ const AdminPanel: React.FC = () => {
           <h1>Product Management</h1>
           <div className="top-actions">
             <button className="btn">Import</button>
-            <button className="btn primary">Add Product</button>
-            <button
-              className="btn theme-toggle"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              aria-label="Toggle theme"
-              title="Toggle theme"
+            <button 
+              className="btn primary" 
+              onClick={() => setIsModalOpen(true)}
             >
-              {theme === 'dark' ? '🌞 Light' : '🌙 Dark'}
+              New Product
             </button>
           </div>
         </header>
 
         <section className="admin-body">
-          <AddProductForm />
+          <ProductTable />
         </section>
+
+        <Modal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          title="Add New Product"
+          className="large-modal"
+        >
+          <AddProductForm />
+        </Modal>
       </main>
     </div>
   )
