@@ -4,6 +4,8 @@ import CartPage from "../../pages/Cart";
 import LoginPage from "../../pages/Login";
 import RegisterPage from "../../pages/Register";
 import ProductDetail from "../../pages/ProductDetail";
+import AddProductForm from "../../pages/admin/AddProductForm";
+import AdminPanel from "../../pages/admin/AdminPanel";
 
 
 export default function MainRouter() {
@@ -13,7 +15,9 @@ export default function MainRouter() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/products/:productId" element={<ProductDetail />} />
+            <Route path="/admin/add-product" element={<AddProductForm />} />
+            <Route path="/admin" element={<AdminPanel />} />
         </Routes>
     );
 }

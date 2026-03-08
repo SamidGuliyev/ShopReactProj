@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import type { Product } from "../../pages/Home";
 import { useCart } from "../../providers/carts/cart-providers";
 import "./product-item.css";
@@ -14,7 +15,7 @@ export default function ProductItem(props: {product: Product}) {
       </div>
 
       <div className="product-info">
-        <h3 className="product-title">{product.title}</h3>
+        <h3 className="product-title"><Link to={`/products/${product.id}`}>{product.title}</Link></h3>
         <p className="product-price">${product.price}</p>
 
         <button

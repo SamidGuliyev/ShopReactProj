@@ -1,0 +1,82 @@
+.admin-root{
+  display:flex;
+  min-height:80vh;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color:#222;
+}
+.admin-sidebar{
+  width:220px;
+  background:#f7f8fa;
+  border-right:1px solid #e6e9ee;
+  padding:20px;
+}
+.admin-sidebar .brand{
+  font-weight:700;
+  margin-bottom:16px;
+}
+.admin-sidebar nav ul{ list-style:none; padding:0; margin:0 }
+.admin-sidebar nav li{
+  padding:10px 6px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.admin-sidebar nav li.active{ background:#e8f0ff; font-weight:600 }
+
+.admin-main{ flex:1; padding:20px 28px }
+.admin-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px }
+.top-actions .btn{ margin-left:8px }
+
+.admin-body{ background:#fff; padding:18px; border-radius:8px; box-shadow:0 1px 2px rgba(16,24,40,0.04) }
+
+.add-product h2{ margin-top:0; margin-bottom:12px }
+.product-form .form-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:12px;
+  margin-bottom:12px;
+}
+.product-form label{ display:flex; flex-direction:column }
+.product-form label span{ font-size:13px; margin-bottom:6px; color:#444 }
+.product-form input, .product-form textarea{ padding:8px 10px; border:1px solid #e1e6ef; border-radius:6px; font-size:14px }
+.product-form label.full{ grid-column:1/-1 }
+.form-actions{ display:flex; gap:10px; margin-top:12px }
+.btn{ padding:8px 12px; border:1px solid #cfd8e6; background:transparent; border-radius:6px; cursor:pointer }
+.btn.primary{ background:#2563eb; color:#fff; border-color:transparent }
+
+@media (max-width:800px){
+  .product-form .form-grid{ grid-template-columns:1fr }
+  .admin-sidebar{ display:none }
+}
+
+/* Dark theme overrides */
+.admin-root.dark{ background:linear-gradient(180deg,#071025 0%, #071a2b 100%); color:#e6eef8 }
+.admin-root.dark .admin-sidebar{
+  background:linear-gradient(180deg,#06131f,#071822);
+  border-right:1px solid rgba(255,255,255,0.04);
+  color:#cfe7ff;
+}
+.admin-root.dark .admin-sidebar .brand{ color:#fff }
+.admin-root.dark .admin-sidebar nav li{ color:#c7d9ee }
+.admin-root.dark .admin-sidebar nav li.active{ background:rgba(255,255,255,0.04); font-weight:600 }
+
+.admin-root.dark .admin-main{ color:#e6eef8 }
+.admin-root.dark .admin-body{ background:linear-gradient(180deg,#071822,#0b2433); box-shadow:0 6px 18px rgba(2,6,23,0.6) }
+
+.admin-root.dark .product-form input,
+.admin-root.dark .product-form textarea{
+  background:#071826;
+  color:#e6eef8;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.admin-root.dark .product-form label span{ color:#cbdff6 }
+.admin-root.dark .btn{ border:1px solid rgba(255,255,255,0.06); color:#dbeafe; background:transparent }
+.admin-root.dark .btn.primary{ background:#0ea5a5; color:#042027; border-color:transparent }
+.admin-root.dark .theme-toggle{ opacity:0.95 }
+
+/* Visual improvements */
+.admin-top h1{ font-size:20px; margin:0 }
+.admin-sidebar nav li{ transition:background .15s ease, transform .08s ease }
+.admin-sidebar nav li:hover{ transform:translateX(4px) }
+.admin-body{ transition:background .2s ease, box-shadow .2s ease }
+.product-form input:focus, .product-form textarea:focus{ outline:none; box-shadow:0 6px 20px rgba(37,99,235,0.08); border-color:#2563eb }
+

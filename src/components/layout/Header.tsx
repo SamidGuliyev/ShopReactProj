@@ -4,7 +4,12 @@ import CartButton from "./cart-button";
 import { useCookies } from "react-cookie";
 
 export default function Header() {
-  const [cookies] = useCookies(["credentials"]);
+  const [cookies, _, removeCookie] = useCookies(["credentials"]);
+
+  const logOut = () => {
+    removeCookie("credentials");
+    window.location.reload();
+  };
 
   return (
     <header className="header">
@@ -19,6 +24,7 @@ export default function Header() {
             </Link>
           ) : null}
           <CartButton />
+          {cookies.credentials ? (
           <div className="avatar-dropdown">
             <button className="avatar-btn">
               <img
@@ -27,9 +33,10 @@ export default function Header() {
               />
             </button>
             <div className="dropdown-menu">
-              <button className="dropdown-item logout-btn">Logout</button>
+              <button onClick={logOut} className="dropdown-item logout-btn">Logout</button>
             </div>
           </div>
+        ) : null}
         </div>
       </div>
     </header>

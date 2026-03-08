@@ -1,18 +1,39 @@
+import { useParams } from "react-router";
 import "./product-detail.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface Product {
+  id : number;
+  title: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+}
 
 export default function ProductDetail() {
-  // Static dummy data for UI display
-  const product = {
-    id: 1,
-    title: "Sony WH-1000XM5 Wireless Headphones",
-    price: 348.00,
-    description: "The Sony WH-1000XM5 Wireless Noise Canceling Headphones redefine distraction-free listening. With two processors controlling 8 microphones, Auto NC Optimizer for automatically optimizing noise canceling based on your wearing conditions and environment, and a specially designed driver unit, you get industry-leading noise canceling and exceptional sound quality.",
-    category: "Electronics",
-    image: "https://m.media-amazon.com/images/I/51SKmu2G9FL._AC_UF1000,1000_QL80_.jpg",
-    rating: { rate: 4.8, count: 1205 }
-  };
 
+
+  const {productId} = useParams();
+  const [product, setProduct] = useState<Product>();
+
+  useEffect(() => {
+    const getProduct = async () => await axios.get(`https://dummyjson.com/products/${productId}`);
+    getProduct().then((response) => {
+      setProduct(response.data);
+    });
+
+    
+
+  }, [productId]);
+
+  if(!product) {
+    return <div>Loading...</div>;
+  }
+  
   return (
+    
     <div className="product-detail-container">
       <button className="back-btn" onClick={() => window.history.back()}>
         ← Back to Products
@@ -28,8 +49,8 @@ export default function ProductDetail() {
           <h1 className="detail-title">{product.title}</h1>
           
           <div className="detail-rating">
-            <span>⭐ {product.rating.rate}</span>
-            <span className="detail-rating-count">({product.rating.count} reviews)</span>
+            <span>⭐</span>
+            <span className="detail-rating-count"></span>
           </div>
 
           <div className="detail-price">${product.price.toFixed(2)}</div>
