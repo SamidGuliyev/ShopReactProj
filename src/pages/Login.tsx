@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { errorToast } from "./utils/toast.utils";
+import { useAuth } from "../providers/auth/AuthProvider";
 
 interface Credentials {
   token: string;
@@ -11,47 +12,11 @@ interface Credentials {
 }
 
 export default function LoginPage() {
-  const [cookies, setCookies] = useCookies(["credentials"]);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const {dispatch, isAuthenticated} = useAuth();
 
-  const onLoginInputsHandle = async (email: string, password: string) => {
-    const _email = email.trim() === "";
-    const _password = password.trim() === "";
-
-    if (_email || _password) {
-      errorToast("Email or Password cannot be empty!");
-    } else {
-      try {
-        // const data = (await axios.get("http://localhost:5000/users"))
-        //   .data as User[];
-
-        // if (data) {
-        //   const user = data.find((u) => u.email === email.toLowerCase());
-        //   if (!user || user.password !== password) {
-        //     errorToast("Email or password is wrong!");
-        //     return;
-        //   }
-
-        //   const token = "barselona1235";
-        //   setCookies("token", token, { path: "/" });
-        // }
-        const credentials = (
-          await axios.post("http://localhost:5000/api/login", {
-            email,
-            password,
-          })
-        ).data as Credentials;
-
-        if (credentials.token)
-          setCookies("credentials", JSON.stringify(credentials), { path: "/" });
-      } catch {
-        errorToast("An error occurred!");
-      }
-    }
-  };
-
-  if (cookies.credentials) {
+  if (isAuthenticated) {
     window.location.href = "/";
     return;
   }
@@ -88,7 +53,7 @@ export default function LoginPage() {
           <button
             onClick={async (e) => {
               e.preventDefault();
-              await onLoginInputsHandle(email, password);
+              dispatch({type: "LOGIN", payload: {email, password}});
             }}
             type="submit"
             className="auth-button"
