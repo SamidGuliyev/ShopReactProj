@@ -1,25 +1,16 @@
 import { Link } from "react-router";
 import "./auth.css";
-import { useState } from "react";
-import axios from "axios";
-import { useCookies } from "react-cookie";
-import { errorToast } from "./utils/toast.utils";
+import { useLayoutEffect, useState } from "react";
 import { useAuth } from "../providers/auth/AuthProvider";
-
-interface Credentials {
-  token: string;
-  expiration: Date;
-}
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const {dispatch, isAuthenticated} = useAuth();
 
-  if (isAuthenticated) {
-    window.location.href = "/";
-    return;
-  }
+  useLayoutEffect(() => {
+    if (isAuthenticated) window.location.href = "/";
+  }, [isAuthenticated]);
 
   return (
     <div className="auth-container">
