@@ -1,16 +1,17 @@
 import { Link } from "react-router";
-import { useCart } from "../providers/carts/cart-providers";
 import "./cart.css";
 import "./cart-empty.css";
 import { useCookies } from "react-cookie";
 import Modal from "../components/layout/Modal";
 import { useState } from "react";
+import { useCart } from "../providers/redux/store";
 
 export default function CartPage() {
   const [cookies] = useCookies(["token"]);
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  const cart = useCart();
+
   if (cart.length === 0) {
     return (
       <div className="cart-container">
