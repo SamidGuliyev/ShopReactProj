@@ -1,16 +1,26 @@
 import { Link } from "react-router";
 import "./auth.css";
 import { useLayoutEffect, useState } from "react";
-import { useAuth } from "../providers/auth/AuthProvider";
+
+import { useCookies } from "react-cookie";
+import { useAuth } from "../providers/redux/store";
+import { useDispatch } from "react-redux";
+import { login } from "../providers/redux/features/auth/auth-slice";
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const {dispatch, isAuthenticated} = useAuth();
+  const auth = useAuth();
+  const dispatch = useDispatch();
+  const [cookies, setCookies] = useCookies<string>(["credentials"]);
 
-  useLayoutEffect(() => {
-    if (isAuthenticated) window.location.href = "/";
-  }, [isAuthenticated]);
+
+    
+
+    useLayoutEffect(() => {
+      if (auth.isAuthenticated) window.location.href = "/";
+      console.log(auth.isAuthenticated);
+    }, [auth.isAuthenticated]);
 
   return (
     <div className="auth-container">
@@ -44,7 +54,7 @@ export default function LoginPage() {
           <button
             onClick={async (e) => {
               e.preventDefault();
-              dispatch({type: "LOGIN", payload: {email, password}});
+              dispatch(login({ email, password, setCookie: setCookies }));
             }}
             type="submit"
             className="auth-button"

@@ -1,7 +1,33 @@
 import { Link } from "react-router";
 import "./auth.css";
+import { useLayoutEffect, useState } from "react";
+import { useAuth } from "../providers/auth/AuthProvider";
+
 
 export default function RegisterPage() {
+
+  const [registerData, setRegisterData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    repassword: "",
+  });
+
+  const registerHandler = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  const { dispatch, isAuthenticated } = useAuth();
+
+
+  useLayoutEffect(() => {
+    if (isAuthenticated) window.location.href = "/";
+  }, [isAuthenticated]);
+
   return (
     <div className="auth-container">
       <div className="auth-card">
@@ -9,14 +35,28 @@ export default function RegisterPage() {
         <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
           <div className="form-group">
             <label htmlFor="name" className="form-label">
-              Full Name
+              First name
             </label>
             <input
               type="text"
               id="name"
+              name="firstName"
               className="form-input"
-              placeholder="Enter your full name"
-              required
+              placeholder="Enter your first name"
+              onChange={registerHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">
+              Last name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="lastName"
+              className="form-input"
+              placeholder="Enter your last name"
+              onChange={registerHandler}
             />
           </div>
           <div className="form-group">
@@ -26,9 +66,10 @@ export default function RegisterPage() {
             <input
               type="email"
               id="email"
+              name="email"
               className="form-input"
               placeholder="Enter your email"
-              required
+              onChange={registerHandler}
             />
           </div>
           <div className="form-group">
@@ -38,9 +79,10 @@ export default function RegisterPage() {
             <input
               type="password"
               id="password"
+              name="password"
               className="form-input"
               placeholder="Create a password"
-              required
+              onChange={registerHandler}
             />
           </div>
           <div className="form-group">
@@ -50,12 +92,18 @@ export default function RegisterPage() {
             <input
               type="password"
               id="confirm-password"
+              name="repassword"
               className="form-input"
               placeholder="Confirm your password"
-              required
+              onChange={registerHandler}
             />
           </div>
-          <button type="submit" className="auth-button">
+          <button type="submit"
+            onClick={async (e) => {
+              e.preventDefault();
+              dispatch({ type: "REGISTER", payload: registerData });
+            }}
+            className="auth-button">
             Sign Up
           </button>
         </form>

@@ -4,10 +4,10 @@ import {
   useReducer,
   type PropsWithChildren,
 } from "react";
-import type { CredentialsToken, User } from "./auth.types";
-import { handleLogin } from "./auth.services";
+import { handleLogin, handleRegister } from "./auth.services";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
+import { errorToast } from "../../pages/utils/toast.utils";
 
 interface AuthContextType {
   user: User;
@@ -36,7 +36,7 @@ function reducer(
       .then((credentials) => {
         state.setCookies(JSON.stringify(credentials));
         const decoded = jwtDecode(credentials.token) as CredentialsToken;
-        return {
+        const obj = {
           ...state,
           user: {
             id: decoded.sub,
@@ -47,13 +47,29 @@ function reducer(
           isAuthenticated: true,
           error: null,
         };
+        console.log(obj);
+        return obj;
       })
       .catch((error) => {
         return {
           ...state,
-          error: error.message || "An error occurred during login.",
+          error: errorToast(error.message || "An error occurred during login."),
         };
       });
+  }
+  else if (type === "REGISTER" && payload) {
+    handleRegister(payload as RegisterData)
+      .then(() => {
+        return { ...state, error: null };
+      })
+      .catch((error) => {
+        return {
+          ...state,
+          error: errorToast(error.message || "An error occurred during registration."),
+        };
+      });
+
+      console.log(payload);
   }
   return state;
 }
@@ -78,7 +94,7 @@ export default function AuthProvider(props: PropsWithChildren) {
       setCookies("credentials", credentials, { path: "/" }),
   });
 
-  console.log(state);
+  // console.log(state);
   
 
   return (

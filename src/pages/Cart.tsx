@@ -5,6 +5,9 @@ import { useCookies } from "react-cookie";
 import Modal from "../components/layout/Modal";
 import { useState } from "react";
 import { useCart } from "../providers/redux/store";
+import { clearCart, removeFromCart, updateQuantity } from "../providers/redux/features/cart/cart-slice";
+import { useDispatch } from "react-redux";
+
 
 export default function CartPage() {
   const [cookies] = useCookies(["token"]);
@@ -33,6 +36,10 @@ export default function CartPage() {
     }
   };
 
+  // console.log(cart);
+
+  const dispatch = useDispatch();
+
   return (
     <div className="cart-container">
       <Modal isOpen={isOpen} onClose={() => setOpen(false)} title="Authentication Required">
@@ -55,15 +62,15 @@ export default function CartPage() {
       </Modal>
 
       <h1 className="cart-title">Your Shopping Cart</h1>
-      <button className="clear-cart-btn" onClick={() => clearCart()}>
+      <button className="clear-cart-btn" onClick={() => dispatch(clearCart())}>
         Clear Cart
       </button>
 
       <div className="cart-content">
         <div className="cart-items">
           {/* Static Item */}
-          {cart.map((item) => (
-            <div className="cart-item">
+          {cart.map((item, index) => (
+            <div key={index} className="cart-item">
               <img
                 src={item.thumbnail}
                 alt={item.title}
@@ -83,7 +90,7 @@ export default function CartPage() {
                   <button
                     className="qty-btn"
                     aria-label="Decrease quantity"
-                    onClick={() => updateQuantity(item.id, -1)}
+                    onClick={() => dispatch(updateQuantity({id: item.id, quantity: -1}))}
                   >
                     −
                   </button>
@@ -91,14 +98,14 @@ export default function CartPage() {
                   <button
                     className="qty-btn"
                     aria-label="Increase quantity"
-                    onClick={() => updateQuantity(item.id, 1)}
+                    onClick={() => dispatch(updateQuantity({id: item.id, quantity: 1}))}
                   >
                     +
                   </button>
                 </div>
 
                 <button
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => dispatch(removeFromCart(item.id))}
                   className="remove-btn"
                 >
                   Remove

@@ -6,11 +6,11 @@ import RegisterPage from "../../pages/Register";
 import ProductDetail from "../../pages/ProductDetail";
 import AddProductForm from "../../pages/admin/AddProductForm";
 import AdminPanel from "../../pages/admin/AdminPanel";
-import AuthProvider from "../auth/AuthProvider";
+
 
 export default function MainRouter() {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/cart" element={<CartPage />} />
@@ -20,6 +20,6 @@ export default function MainRouter() {
         <Route path="/admin/add-product" element={<AddProductForm />} />
         <Route path="/admin" element={<AdminPanel />} />
       </Routes>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }

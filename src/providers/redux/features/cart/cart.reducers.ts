@@ -13,3 +13,33 @@ export function addToCart(state: CartItem[], action: PayloadAction<ProductItem>)
         state.push({ ...product, quantity: 1 });
     }
 }
+
+export function cleartMethod(state: CartItem[]) {
+    while (state.length > 0) {
+        state.pop();
+    }
+}
+
+export function removeCartMethod(state: CartItem[], action: PayloadAction<number>) {
+    const productId = action.payload;
+
+    const product = state.findIndex((i) => i.id === productId);
+    if (product >= 0) {
+        state.splice(product, 1);
+    }
+
+}
+
+export function updateQuantityMethod(state: CartItem[], action: PayloadAction<{ id: number, quantity: number }>) {
+    const { id, quantity } = action.payload;
+    const productIndex = state.findIndex((i) => i.id === id);
+    if (productIndex >= 0) {
+
+        if (quantity == -1 && state[productIndex].quantity == 1) {
+            state[productIndex].quantity = 1;
+        }
+        else {
+            state[productIndex].quantity += quantity;
+        }
+    }
+}
