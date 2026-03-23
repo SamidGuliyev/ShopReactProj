@@ -1,16 +1,10 @@
 import { Link } from "react-router";
 import "./header.css";
 import CartButton from "./cart-button";
-import { useCookies } from "react-cookie";
+import { useAuth } from "../../providers/auth/auth-store";
 
 export default function Header() {
-  const [cookies, _, removeCookie] = useCookies(["credentials"]);
-
-  const logOut = () => {
-    removeCookie("credentials");
-    window.location.reload();
-  };
-
+  const { logout, isAuthenticated } = useAuth();
   return (
     <header className="header">
       <div className="header-container">
@@ -18,25 +12,25 @@ export default function Header() {
           🛍️ <span>SHOP</span>
         </Link>
         <div className="nav-actions">
-          {!cookies.credentials ? (
+          {!isAuthenticated ? (
             <Link to="/login" className="auth-btn">
               Login
             </Link>
           ) : null}
           <CartButton />
-          {cookies.credentials ? (
-          <div className="avatar-dropdown">
-            <button className="avatar-btn">
-              <img
-                src="https://ui-avatars.com/api/?name=User&background=random"
-                alt="User"
-              />
-            </button>
-            <div className="dropdown-menu">
-              <button onClick={logOut} className="dropdown-item logout-btn">Logout</button>
+          {isAuthenticated ? (
+            <div className="avatar-dropdown">
+              <button className="avatar-btn">
+                <img
+                  src="https://ui-avatars.com/api/?name=User&background=random"
+                  alt="User"
+                />
+              </button>
+              <div className="dropdown-menu">
+                <button onClick={logout} className="dropdown-item logout-btn">Logout</button>
+              </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
         </div>
       </div>
     </header>

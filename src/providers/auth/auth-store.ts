@@ -9,6 +9,7 @@ interface AuthState {
     isAuthenticated: boolean;
     error: string | null;
     login: (inputs: LoginUser) => Promise<void>;
+    logout: () => void;
 }
 
 export const useAuth = create<AuthState>()((set) => {
@@ -37,6 +38,16 @@ export const useAuth = create<AuthState>()((set) => {
             } catch (error) {
                 console.error(error);
             }
+        },
+        logout: () => {
+            Cookies.remove("credentials");
+            set(state => {
+                return {
+                    ...state,
+                    user: {} as User,
+                    isAuthenticated: false,
+                }
+            })
         }
     }
 });
