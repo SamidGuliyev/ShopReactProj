@@ -1,10 +1,9 @@
 import axios from "axios";
-import type { Credentials, RegisterData } from "./auth.types";
+import type { Credentials, LoginUser, RegisterData } from "../../types/auth/auth.types";
 
 
 
 export async function handleRegister(data: RegisterData) {
-
   const _email = data.email.trim() === "";
   const _password = data.password.trim() === "";
   const _repassword = data.repassword.trim() === "";
@@ -27,12 +26,10 @@ export async function handleRegister(data: RegisterData) {
   } catch {
     throw new Error("An error occurred during registration!");
   }
-
-
 }
 
 
-export async function handleLogin({ email, password }: { email: string, password: string }) {
+export async function handleLogin({ email, password }: LoginUser) {
   const _email = email.trim() === "";
   const _password = password.trim() === "";
 
@@ -46,12 +43,6 @@ export async function handleLogin({ email, password }: { email: string, password
         password,
       })
     ).data as Credentials;
-    // console.log(credentials);
-
-  
-
-    // if (credentials.token)
-    //   setCookies("credentials", JSON.stringify(credentials), { path: "/" });
     return credentials;
   } catch {
     throw new Error("An error occurred!");

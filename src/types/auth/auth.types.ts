@@ -16,7 +16,6 @@ export interface User {
 export interface LoginUser{
     email: string;
     password: string;
-    setCookie: (name: string, value: any, options?: CookieSetOptions | undefined) => void
 }
 
 export interface Credentials {
