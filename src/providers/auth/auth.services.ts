@@ -16,7 +16,7 @@ export async function handleRegister(data: RegisterData) {
     throw new Error("Passwords do not match!");
 
   try {
-    await axios.post("https://localhost:7000/api/register", {
+    await axios.post("http://localhost:5000/api/register", {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,

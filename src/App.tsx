@@ -1,7 +1,6 @@
 import { useLocation } from "react-router";
 import Header from "./components/layout/Header";
 import MainRouter from "./providers/routes/main-router";
-import CartProvider from "./providers/carts/cart-providers";
 import { CookiesProvider } from "react-cookie";
 
 function App() {
@@ -10,10 +9,8 @@ function App() {
 
   return (
     <CookiesProvider>
-      <CartProvider>
-        {!isAdmin && <Header />}
-        <MainRouter />
-      </CartProvider>
+      {!isAdmin && <Header />}
+      <MainRouter />
     </CookiesProvider>
   );
 }

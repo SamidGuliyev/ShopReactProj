@@ -12,9 +12,9 @@ export interface Product {
 export default function HomePage() {
     const [products, setProducts] = useState<Product[]>([]);
     useEffect(() => {
-        axios.get("https://dummyjson.com/products")
+        axios.get("http://localhost:5000/api/products")
             .then((response) => {
-                setProducts(response.data.products);
+                setProducts(response.data);
             })
             .catch((error) => {
                 console.error("Error fetching products:", error);

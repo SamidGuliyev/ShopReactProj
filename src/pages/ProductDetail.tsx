@@ -19,7 +19,7 @@ export default function ProductDetail() {
   const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    const getProduct = async () => await axios.get(`https://dummyjson.com/products/${productId}`);
+    const getProduct = async () => await axios.get(`http://localhost:5000/api/product/${productId}`);
     getProduct().then((response) => {
       setProduct(response.data);
     });

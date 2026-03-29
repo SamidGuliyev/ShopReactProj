@@ -1,8 +1,10 @@
 import { Link } from "react-router";
-import { useCart } from "../../providers/redux/store";
+import { useCartStore } from "../../providers/carts/cart-store";
 
 export default function CartButton() {
-    const cart = useCart();
+    
+    const { cart } = useCartStore();
+    
     const totalCount = cart.length;
     
     return (

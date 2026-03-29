@@ -1,10 +1,13 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import "./auth.css";
 import { useLayoutEffect, useState } from "react";
-import { useAuth } from "../providers/auth/AuthProvider";
+import { useAuth } from "../providers/auth/auth-store";
+
 
 
 export default function RegisterPage() {
+
+  const navigate = useNavigate();
 
   const [registerData, setRegisterData] = useState({
     firstName: "",
@@ -21,7 +24,7 @@ export default function RegisterPage() {
     }));
   }
 
-  const { dispatch, isAuthenticated } = useAuth();
+  const { isAuthenticated, register } = useAuth();
 
 
   useLayoutEffect(() => {
@@ -101,7 +104,10 @@ export default function RegisterPage() {
           <button type="submit"
             onClick={async (e) => {
               e.preventDefault();
-              dispatch({ type: "REGISTER", payload: registerData });
+              const bool = await register(registerData);
+              if (bool) {
+                navigate("/login");
+              }
             }}
             className="auth-button">
             Sign Up

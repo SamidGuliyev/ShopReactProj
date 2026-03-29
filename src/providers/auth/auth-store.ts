@@ -1,16 +1,10 @@
 import { create } from "zustand";
-import type { CredentialsToken, LoginUser, User } from "../../types/auth/auth.types";
-import { handleLogin } from "./auth.services";
+import type { AuthState, CredentialsToken, LoginUser, RegisterData, User } from "../../types/auth/auth.types";
+import { handleLogin, handleRegister } from "./auth.services";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
-interface AuthState {
-    user: User;
-    isAuthenticated: boolean;
-    error: string | null;
-    login: (inputs: LoginUser) => Promise<void>;
-    logout: () => void;
-}
+
 
 export const useAuth = create<AuthState>()((set) => {
     return {
@@ -48,6 +42,15 @@ export const useAuth = create<AuthState>()((set) => {
                     isAuthenticated: false,
                 }
             })
+        },
+        register: async (data : RegisterData) => {
+            try{
+                await handleRegister(data);
+                return true;
+            } catch (error) {
+                console.error(error);
+                return false;
+            }
         }
     }
 });

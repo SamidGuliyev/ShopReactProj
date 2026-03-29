@@ -1,13 +1,13 @@
 import { Link } from "react-router";
 import type { Product } from "../../pages/Home";
 import "./product-item.css";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../providers/redux/features/cart/cart-slice";
+
+import { useCartStore } from "../../providers/carts/cart-store";
 
 export default function ProductItem(props: { product: Product }) {
   const product = props.product;
 
-  const dispatch = useDispatch();
+  const { addToCart } = useCartStore();
 
   return (
     <article className="product-card">
@@ -21,12 +21,13 @@ export default function ProductItem(props: { product: Product }) {
 
         <button
           className="add-to-cart-btn"
-          onClick={() => dispatch(addToCart({
+          onClick={() => addToCart({
             id: product.id,
             title: product.title,
             price: product.price,
             thumbnail: product.thumbnail,
-          }))}
+            quantity: 1
+          })}
         >
           Add to Cart
         </button>

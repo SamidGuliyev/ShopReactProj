@@ -1,15 +1,19 @@
 import { Link } from "react-router";
 import "./auth.css";
 import { useLayoutEffect, useState } from "react";
+
 import { useAuth } from "../providers/auth/auth-store";
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  // const { isAuthenticated } = useAuth();
+  // const dispatch = useDispatch();
   const { isAuthenticated, login } = useAuth();
 
   useLayoutEffect(() => {
     if (isAuthenticated) window.location.href = "/";
+    console.log(isAuthenticated);
   }, [isAuthenticated]);
 
   return (
@@ -42,10 +46,10 @@ export default function LoginPage() {
             />
           </div>
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
               console.log("Login Clicked: ", email, password)
-              login({ email, password });
+              await login({ email, password });
             }}
             type="submit"
             className="auth-button"

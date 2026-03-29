@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
-import { store } from "./providers/redux/store.ts";
+import { store } from "./providers/redux(unused)/store.ts";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

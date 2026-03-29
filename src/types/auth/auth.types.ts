@@ -43,3 +43,12 @@ export interface AuthState {
     isAuthenticated : boolean;
     error : string | null;
 }
+
+export interface AuthState {
+    user: User;
+    isAuthenticated: boolean;
+    error: string | null;
+    login: (inputs: LoginUser) => Promise<void>;
+    logout: () => void;
+    register: (data: RegisterData) => Promise<boolean>;
+}
